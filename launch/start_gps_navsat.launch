@@ -1,0 +1,12 @@
+<launch>
+   
+    <!-- launch of the node for transformation of gps info into odom info -->
+    <!--<include file="$(find m2wr_description)/launch/start_navsat.launch" />-->
+    
+    <!-- launch of gps localization node -->
+    <include file="$(find m2wr_description)/launch/ekf_navsat_localization.launch" />
+
+    <!-- run the map server -->
+    <include file="$(find m2wr_description)/launch/start_map_server.launch" />
+
+</launch>

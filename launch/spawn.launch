@@ -1,0 +1,31 @@
+
+<launch>
+<include file="$(find gazebo_ros)/launch/empty_world.launch">
+		
+	</include>
+        <param name="robot_description" command="$(find xacro)/xacro.py '$(find m2wr_description)/urdf/m2wr.xacro'"/>
+
+       <!-- <arg name="use_tf_static" default="false"/> 
+        <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" >
+          <param name="use_tf_static" value="$(arg use_tf_static)"/>
+        </node> -->
+
+<node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher">
+    <param name="use_gui" value="False"/>
+  </node>
+<node pkg="robot_state_publisher" type="robot_state_publisher" name="robot_state_publisher"></node>
+  
+  
+  <param name="robot_description" command="$(find xacro)/xacro.py '$(find m2wr_description)/urdf/m2wr.xacro'"/>
+  <node pkg="rviz" type="rviz" name="rviz"></node>
+
+        <arg name="x" default="0"/>
+        <arg name="y" default="0"/>
+        <arg name="z" default="0"/>
+
+        <node name="m2wr_spawn" pkg="gazebo_ros" type="spawn_model" output="screen" 
+        args="-urdf -param robot_description -model m2wr -x $(arg x) -y $(arg y) -z $(arg z)"/>
+
+
+
+</launch>

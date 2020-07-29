@@ -1,0 +1,14 @@
+#determines the maximum range sensor reading that will result in an obstacle being put into the costmap
+obstacle_range: 10.0
+#determines the range to which we will raytrace freespace given a sensor reading
+raytrace_range: 10.0
+footprint: [[2.0, 1.2], [2.0, -1.2], [-2.0, -1.2], [-2.0, 1.2]]
+#robot_radius: ir_of_robot
+#The inflation radius should be set to the maximum distance from obstacles at which a cost should be incurred.
+inflation_radius: 2.0
+
+observation_sources:  velodyne
+
+#laser_scan_sensor: {sensor_frame: frame_name, data_type: LaserScan, topic: topic_name, marking: true, clearing: true}
+
+velodyne: {sensor_frame: velodyne_base_link, data_type: PointCloud, topic: /velodyne_pc, marking: true, clearing: true}

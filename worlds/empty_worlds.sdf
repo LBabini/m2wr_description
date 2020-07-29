@@ -1,0 +1,46 @@
+<?xml version="1.0" ?>
+<sdf version="1.5">
+  <world name="default">
+    <!-- A global light source -->
+    <include>
+      <uri>model://sun</uri>
+    </include>
+    <!-- A ground plane -->
+    <include>
+      <uri>model://ground_plane</uri>
+    </include>
+<!--<model:physical name="box_model">
+  <xyz>0 1.5 0.5</xyz>
+  <rpy>0.0 0.0 0.0</rpy>
+  <canonicalBody>box1_body</canonicalBody>
+  <static>false</static>
+
+  <body:box name="box_body">
+    <xyz>0.0 0.0 0.0</xyz>
+    <rpy>0.0 0.0 0.0</rpy>
+
+    <geom:box name="box_geom">
+      <xyz>0.0 0.0 0.0</xyz>
+      <rpy>0.0 0.0 0.0</rpy>
+      <mesh>default</mesh>
+      <size>10 3 1</size>
+      <density>1.0</density>
+      <material>Gazebo/BumpyMetal</material>
+    </geom:box>
+  </body:box>
+</model:physical>-->
+<model name="box">
+    <link name="link">
+      <visual name="visual">
+        <geometry>
+          <cylinder>
+            <radius>0.15</radius>
+            <length>3</length>
+          </cylinder>
+        </geometry>
+
+      </visual>
+    </link>
+  </model>
+  </world>
+</sdf>

@@ -1,0 +1,16 @@
+imu_filter_madgwick:
+gain: 0.1
+zeta: 0.0
+mag_bias_x: 0
+mag_bias_y: 0
+mag_bias_z: 0
+orientation_stddev: 0.0
+world_frame: enu
+use_mag: true
+use_magnetic_field_msg: false
+fixed_frame: base_link
+publish_tf: true
+reverse_tf: false
+constant_dt: 0.0
+publish_debug_topics: false
+stateless: false

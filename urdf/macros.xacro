@@ -1,0 +1,57 @@
+<?xml version="1.0"?>
+<robot name="m2wr_macros" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+    <xacro:property name="wheel_radius" value="0.3" /> 
+    <xacro:property name="wheel_length" value="0.16" />
+    <xacro:property name="wheel_mass" value="10" /> <!-- in kg-->
+
+    <macro name="cylinder_inertia" params="mass r l" >
+        <inertia  ixx="${mass *(3*r*r+l*l)/12}" ixy = "0" ixz = "0"
+                  iyy="${mass *(3*r*r+l*l)/12}" iyz = "0"
+                  izz="${mass *(r*r)/2}" />
+    </macro>
+
+    <macro name="box_inertia" params="mass x y z" >
+        <inertia  ixx = "${0.083 * mass * (y*y + z*z)}" ixy = "0" ixz = "0"
+                  iyy="${0.083 * mass * (x*x + z*z)}" iyz = "0"
+                  izz="${0.083 * mass * (x*x + y*y)}" />
+    </macro>
+
+
+         <!-- WHEELS -->
+    <macro name= "link_wheel" params= "name" >
+        <link name="${name}">
+            <inertial>
+            <mass value="${wheel_mass}"/>
+            <origin rpy="0 1.5707 1.5707" xyz="0 0 0"/>
+            <cylinder_inertia  mass="${wheel_mass}" r="${wheel_radius}" l="${wheel_length}" />
+            </inertial>
+            <collision name="${name}_collision">
+            <origin rpy="0 1.5707 1.5707" xyz="0 0 0"/>
+            <geometry>
+                <cylinder length="${wheel_length}" radius="${wheel_radius}"/>
+            </geometry>
+            </collision>
+            <visual name="${name}_visual">
+            <origin rpy="0 1.5707 1.5707" xyz="0 0 0"/>
+            <geometry>
+                <cylinder length="${wheel_length}" radius="${wheel_radius}"/>
+            </geometry>
+            <material name="grey"/>
+            </visual>
+        </link>
+    </macro>
+
+        <!-- WHEELS JOINTS -->
+    <macro name= "joint_wheel" params= "name parent child origin_xyz" >
+        <joint name="${name}" type="continuous">
+            <origin rpy="0 0 0" xyz="${origin_xyz}"/>
+            <child link="${child}"/>
+            <parent link="${parent}"/>
+            <axis rpy="0 0 0" xyz="0 1 0"/>
+            <limit effort="10000" velocity="1000"/>
+            <joint_properties damping="1.0" friction="1.0"/>
+        </joint>
+    </macro>
+    
+</robot>

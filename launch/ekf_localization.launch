@@ -1,0 +1,27 @@
+<launch>
+
+
+  <node pkg="robot_localization" type="ekf_localization_node" name="ekf_se_odom" clear_params="true">
+    <rosparam command="load" file="$(find m2wr_description)/config/ekf_localization.yaml" />
+  </node>
+
+<node pkg="m2wr_description" type="change_msg" name="change_msg" output="screen" respawn="false" >
+</node>
+
+<node pkg="imu_filter_madgwick" type="imu_filter_node" name="imu_filter_madgwick" output="screen" respawn="false" >
+    <param name="fixed_frame" value="odom"/>
+    <param name="use_mag" value="true"/>
+    <param name="use_magnetic_field_msg" value="true"/>
+    <param name="world_frame" value="enu"/>
+    <param name="publish_tf" value="false"/>
+    <param name="gain" value="0.4"/>
+    <param name="zeta" value="0.0"/>
+    <param name="mag_bias_x" value="2.0"/>
+    <param name="mag_bias_y" value="2.0"/>
+    <param name="mag_bias_z" value="2.0"/>
+    <param name="orientation_stddev" value="0.0"/>
+  <remap from="/imu/data_raw" to="/imu_raw"/>
+  <remap from="/imu/mag" to="/mag_field"/>  
+ </node>
+
+</launch>

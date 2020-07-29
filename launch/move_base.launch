@@ -1,0 +1,24 @@
+<launch>
+
+   <master auto="start"/>
+ <!-- Run the map server --> 
+    <node name="map_server" pkg="map_server" type="map_server" args="$(find motion_plan)/maps/orchard/orchard.yaml"/>
+
+ <!-- Run VELODYNE -->
+    <include file="$(find m2wr_description)/launch/pc2ls.launch" />
+ 
+ <!-- Run PC2 2 PC 
+    <include file="$(find point_cloud_converter)/launch/point_cloud_converter.launch" />-->
+
+ <!--- Run AMCL --> 
+    <include file="$(find amcl)/examples/amcl_diff.launch" />
+
+   <node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen">
+    <rosparam file="$(find m2wr_description)/config/costmap_common_params.yaml" command="load" ns="global_costmap" /> 
+    <rosparam file="$(find m2wr_description)/config/costmap_common_params.yaml" command="load" ns="local_costmap" />
+    <rosparam file="$(find m2wr_description)/config/local_costmap_params.yaml" command="load" />
+    <rosparam file="$(find m2wr_description)/config/global_costmap_params.yaml" command="load" /> 
+    <!--<rosparam file="$(find m2wr_description)/config/dwa_local_planner_params.yaml" command="load" />-->
+ </node>
+
+</launch> 

@@ -1,0 +1,96 @@
+<?xml version ="1.0" ?>
+<robot>
+
+<gazebo reference="base_link">
+    <material>Gazebo/Orange</material>
+  </gazebo>
+  <gazebo reference="link_left_wheel">
+    <material>Gazebo/Grey</material>
+  </gazebo>
+  <gazebo reference="link_right_wheel">
+    <material>Gazebo/Grey</material>
+  </gazebo>
+  
+	<!-- DIFFERENTIAL DRIVE -->
+  <gazebo>
+    <plugin filename="libgazebo_ros_diff_drive.so" name="differential_drive_controller">
+      <legacyMode>false</legacyMode>
+      <alwaysOn>true</alwaysOn>
+      <updateRate>100</updateRate>
+      <leftJoint>joint_left_wheel</leftJoint>
+      <rightJoint>joint_right_wheel</rightJoint>
+      <wheelSeparation>1.2</wheelSeparation>
+      <wheelDiameter>0.6</wheelDiameter>
+      <wheelAcceleration>0</wheelAcceleration>
+      <wheelTorque>65</wheelTorque>
+      <publishOdomTF>true</publishOdomTF>
+      <commandTopic>/cmd_vel</commandTopic>
+      <odometryTopic>/odom</odometryTopic>
+      <odometryFrame>odom</odometryFrame>
+      <robotBaseFrame>base_link</robotBaseFrame>
+      <publishWheelTF>true</publishWheelTF>
+      <publishWheelJointState>true</publishWheelJointState>
+    </plugin>
+  </gazebo>
+
+        <!-- GPS SENSOR -->
+  <gazebo>
+    <plugin name="novatel_gps_sim" filename="libhector_gazebo_ros_gps.so">
+      <frameId>gps_link</frameId>
+      <alwaysOn>1</alwaysOn>
+      <updateRate>50</updateRate>
+      <bodyName>base_link</bodyName>
+      <topicName>/m2wr/fix</topicName>
+      <velocityTopicName>m2wr/fix_velocity</velocityTopicName>
+      <referenceLatitude>44.548811</referenceLatitude>
+      <referenceLongitude>11.4128185</referenceLongitude>
+      <referenceHeading>0</referenceHeading>
+      <referenceAltitude>0</referenceAltitude>
+      <drift>0.0001 0.0001 0.0001</drift>
+      <gaussianNoise>0.1 0.1 0.1</gaussianNoise>
+      <velocityDrift>0 0 0</velocityDrift>
+      <velocityGaussianNoise>0.1 0.1 0.1</velocityGaussianNoise>
+    </plugin>
+  </gazebo>
+<!-- To reduce acceleration covariance change acceldrift and accelgaussiannoise to 0.001 to have a 0.01 in linear acc covariance (real behaviour)-->
+
+	<!-- IMU SENSOR -->
+<gazebo>
+    <plugin name="imu_controller" filename="libhector_gazebo_ros_imu.so">
+      <robotNamespace>/</robotNamespace>
+      <updateRate>50.0</updateRate>
+      <bodyName>base_link</bodyName>
+      <topicName>imu_raw</topicName>
+      <accelDrift>0.5 0.5 0.5</accelDrift>
+      <accelGaussianNoise>0.5 0.5 0.5</accelGaussianNoise>
+      <rateDrift>0.005 0.005 0.005 </rateDrift>
+      <rateGaussianNoise>0.005 0.005 0.005 </rateGaussianNoise>
+      <headingDrift>0.005</headingDrift>
+      <headingGaussianNoise>0.005</headingGaussianNoise>
+      <xyzOffset>0 0 0</xyzOffset>
+      <rpyOffset>0 0 0</rpyOffset>
+    </plugin>
+  </gazebo>
+
+	<!-- MAGNETOMETER SENSOR -->
+<gazebo>
+<plugin name="magnetometer" filename="libhector_gazebo_ros_magnetic.so">   
+    <updateRate>50.0</updateRate>
+    <bodyname>base_link</bodyname>
+    <robotNamespace>/</robotNamespace>
+    <topicName>magnetic</topicName>
+    <referenceHeading>90</referenceHeading>
+    <magnitude>47.407</magnitude>
+    <declination>3.0333</declination>
+    <inclination>60.0</inclination>
+    <offset>0 0 0</offset>
+    <drift>0 0 0</drift>
+    <driftFrequency>0 0 0</driftFrequency>
+    <gaussianNoise>0 0 0</gaussianNoise>
+</plugin>
+</gazebo>
+
+ 
+
+
+  </robot>
